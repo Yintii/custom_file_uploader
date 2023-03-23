@@ -18,12 +18,13 @@
     6
  );
 
+
 function kh_create_meetings_table(){
     global $wpdb;
 
     $table_name =  $wpdb->prefix . "meetings";
     
-    $sql = "CREATE TABLE $table_name(
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name(
         id int NOT NULL AUTO_INCREMENT,
         time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
         location text NOT NULL,

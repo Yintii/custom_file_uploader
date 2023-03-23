@@ -1,4 +1,13 @@
-<form id="kh_meeting_upload_form" action="<?php echo esc_url( admin_url('/admin-post.php') ); ?>" method="POST" enctype="multipart/form-data">
+<?php
+    if(isset($_POST['submit'])){
+        echo "Submit detected!";
+        print_r($_POST);
+        print_r($_FILES);
+    }
+?>
+
+
+<form id="kh_meeting_upload_form" action="" method="POST" enctype="multipart/form-data">
     <input type="datetime-local" name="datetime" />
     <select name="location" >
         <option value="none" disabled selected hidden>Select Location</option>
@@ -24,11 +33,9 @@
         <option>FT#4</option>
         <option>FT#5</option>
     </select>
-    <input type="file" accept=".pdf"/>
-
-    <input type="hidden" name="action" value="submit_form">
-    <?php wp_nonce_field('submit_form_nonce', 'submit_form_nonce'); ?>
+    <input type="file" name="fileData" accept=".pdf"/>
     <input type="submit" name="submit" value="submit" />
+
 </form>
 
 <style>
