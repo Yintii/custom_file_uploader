@@ -35,6 +35,8 @@ function kh_create_meetings_table(){
 
 
  wp_register_style('kh_uploader_home_styles', '/wp-content/plugins/kh_meeting_uploader/styles/home.css');
+ wp_register_style('kh_uploader_upload_styles', '/wp-content/plugins/kh_meeting_uploader/styles/upload.css');
+ wp_register_style('kh_uploader_edit_styles', '/wp-content/plugins/kh_meeting_uploader/styles/edit.css');
 
  add_menu_page(
     'Meetings',
@@ -62,10 +64,6 @@ add_action('admin_menu', 'kh_upload_submenu');
 function kh_upload_submenu_callback(){
     include_once(plugin_dir_path(__FILE__) . '/Menu/Upload.php');
 }
-
-//////////////////
-
-
 
 function kh_edit_submenu(){
     add_submenu_page(

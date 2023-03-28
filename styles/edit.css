@@ -1,0 +1,14 @@
+.kh-table-wrap{
+    width:100%;
+}
+
+.kh-table-wrap table{
+    width:80%;
+    min-height: 80vh;
+    max-height: 80vh;
+    margin: 0 auto;
+    overflow-y: scroll;
+}
+td{
+    padding: 0.5rem 1rem;
+}

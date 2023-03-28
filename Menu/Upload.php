@@ -1,4 +1,6 @@
 <?php
+    wp_enqueue_style('kh_uploader_upload_styles');
+
     function upload_doc(){
         require_once( dirname(__FILE__) . '/../../../../wp-load.php' );
 
@@ -140,23 +142,3 @@
         }
     ?>
 </form>
-
-<style>
-    #kh_meeting_upload_form{
-        display: flex;
-        flex-flow: column nowrap;
-        margin: 1rem auto;
-    }
-    #kh_meeting_upload_form input, #kh_meeting_upload_form select{
-        width: 400px;
-        margin: 1rem auto;
-    }
-    .kh-success-msg{
-        color:white;
-        background-color:green;
-        font-size: 18px;
-        padding: 1rem;
-        border-radius: 15px;
-        margin: 0 auto;
-    }
-</style>
