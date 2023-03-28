@@ -14,7 +14,7 @@
         <div class="kh-menu-content">
             <div class="kh-bubble-content">
                 <h2>Upload new meetings</h2>
-                <a href="/wp-admin/admin.php?page=kh_meeting_uploader_uploader_submenu">Upload</a>
+                <a href="/wp-admin/admin.php?page=kh_meeting_uploader_upload">Upload</a>
             </div>
             <div class="kh-bubble-content">
                 <h2>Manage exisiting meetings</h2>

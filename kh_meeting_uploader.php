@@ -60,7 +60,7 @@ function kh_upload_submenu(){
 add_action('admin_menu', 'kh_upload_submenu');
 
 function kh_upload_submenu_callback(){
-    include_once(plugin_dir_path(__FILE__) . '/Menu/Menu.php');
+    include_once(plugin_dir_path(__FILE__) . '/Menu/Upload.php');
 }
 
 //////////////////
