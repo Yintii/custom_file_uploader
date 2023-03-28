@@ -1,62 +1,60 @@
 <?php
+    function upload_doc(){
+        require_once( dirname(__FILE__) . '/../../../../wp-load.php' );
+
+        // it allows us to use wp_handle_upload() function
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+        $target_dir = content_url();
+        $target_file = $target_dir . basename($_FILES["fileData"]["name"]);
+        $uploadOk = 1;
+        $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 
-        function upload_doc(){
-            require_once( dirname(__FILE__) . '/../../../../wp-load.php' );
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            echo "<br />";
+            $uploadOk = 0;
+        }
 
-            // it allows us to use wp_handle_upload() function
-            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        // Check file size
+        if ($_FILES["fileData"]["size"] > 10_000_000) {
+            echo "Sorry, your file is too large.";
+            echo "<br />";
+            echo "File size: " . $_FILES["fileData"]["size"];
+            echo "<br />";
+            $uploadOk = 0;
+        }
 
-            $target_dir = content_url();
-            $target_file = $target_dir . basename($_FILES["fileData"]["name"]);
-            $uploadOk = 1;
-            $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-
-            // Check if file already exists
-            if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
-                echo "<br />";
-                $uploadOk = 0;
+        // Allow certain file formats
+        if($fileType !== "pdf") {
+            if($fileType == null){
+            return;
+            }else{
+            echo "Sorry, docx and pdf files are allowed.";
+            echo "<br />";
+            $uploadOk = 0;
             }
+        }
 
-            // Check file size
-            if ($_FILES["fileData"]["size"] > 1500000) {
-                echo "Sorry, your file is too large.";
-                echo "<br />";
-                $uploadOk = 0;
-            }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+            echo "<br />";
+        // if everything is ok, try to upload file
+        } else {
+            $upload = wp_upload_bits($_FILES["fileData"]["name"], null, file_get_contents( $_FILES["fileData"]["tmp_name"]));
 
-            // Allow certain file formats
-            if($fileType !== "docx" && $fileType !== "pdf") {
-                if($fileType == null){
-                return;
-                }else{
-                echo "Sorry, docx and pdf files are allowed.";
-                echo "<br />";
-                $uploadOk = 0;
-                }
-            }
-
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                echo "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
-            } else {
-                if($fileType === "pdf"){
-
-                }
-                $upload = wp_upload_bits($_FILES["fileData"]["name"], null, file_get_contents( $_FILES["fileData"]["tmp_name"]));
-
-                if ($upload) {
+            if ($upload) {
                 return $upload['url'];
-                } else {
+            } else {
                 echo "Sorry, there was an error uploading your file.";
                 echo "<br />";
                 return;
-                }
             }
         }
+    }
 
     function writeData(
         $date_time,
@@ -89,57 +87,58 @@
        try {
          $wpdb->insert($table, $data, $format);
        } catch (Exception $e) {
-            echo 'There was an error trying to insert the data to the database' . $e->getMessage();
+            echo 'Failed to insert the data to the database' . $e->getMessage();
        }
 
     }
 
-
-
+    //if the request is a POST request, 
+    //get the url parameters, upload the pdf file,
+    //submit contents to database
     if(isset($_POST['submit'])){
-        echo "Submit detected!";
-
-        $upload_url = upload_doc($_FILES['fileData']);
-
         $dt = $_POST['datetime'];
         $loc = $_POST['location'];
         $mt = $_POST['meeting_type'];
         $ft = $_POST['file_type'];
-        
+        $upload_url = upload_doc($_FILES['fileData']);
         writeData($dt, $loc, $mt, $ft, $upload_url);
-
     }
 ?>
 
 
 <form id="kh_meeting_upload_form" action="" method="POST" enctype="multipart/form-data">
-    <input type="datetime-local" name="datetime" />
-    <select name="location" >
-        <option value="none" disabled selected hidden>Select Location</option>
+    <input type="datetime-local" name="datetime" required/>
+    <select name="location" required>
+        <option value="" disabled selected hidden>Select Location</option>
         <option>L#1</option>
         <option>L#2</option>
         <option>L#3</option>
         <option>L#4</option>
         <option>L#5</option>
     </select>
-    <select name="meeting_type" >
-        <option value="none" disabled selected hidden>Select Meeting Type</option>
+    <select name="meeting_type" required>
+        <option value="" disabled selected hidden>Select Meeting Type</option>
         <option>MT#1</option>
         <option>MT#2</option>
         <option>MT#3</option>
         <option>MT#4</option>
         <option>MT#5</option>
     </select>
-    <select name="file_type" >
-        <option value="none" disabled selected hidden>Select File Type</option>
+    <select name="file_type" required>
+        <option value="" disabled selected hidden>Select File Type</option>
         <option>FT#1</option>
         <option>FT#2</option>
         <option>FT#3</option>
         <option>FT#4</option>
         <option>FT#5</option>
     </select>
-    <input type="file" name="fileData" accept=".pdf"/>
+    <input type="file" name="fileData" accept=".pdf" required/>
     <input type="submit" name="submit" value="submit" />
+    <?php
+        if(isset($_POST['submit'])){
+            echo '<span class="kh-success-msg">Success!</span>';
+        }
+    ?>
 </form>
 
 <style>
@@ -151,5 +150,13 @@
     #kh_meeting_upload_form input, #kh_meeting_upload_form select{
         width: 400px;
         margin: 1rem auto;
+    }
+    .kh-success-msg{
+        color:white;
+        background-color:green;
+        font-size: 18px;
+        padding: 1rem;
+        border-radius: 15px;
+        margin: 0 auto;
     }
 </style>

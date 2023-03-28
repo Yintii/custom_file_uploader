@@ -3,21 +3,14 @@
  * Plugin Name: Meeting uploader plugin
  */
 
+
+
+ //code to create the database table
+ //needed to use the plugin
  register_activation_hook(
     '/wp-content/plugins/kh_meeting_uploader/kh_meeting_uploader.php',
     kh_create_meetings_table()
  );
-
- add_menu_page(
-    'Meeting Uploader',
-    'Meeting Uploader',
-    'manage_options',
-    'kh_meeting_uploader/Menu/Menu.php',
-    '',
-    '',
-    6
- );
-
 
 function kh_create_meetings_table(){
     global $wpdb;
@@ -37,4 +30,56 @@ function kh_create_meetings_table(){
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
     
     dbDelta( $sql );
+}
+
+
+
+ wp_register_style('kh_uploader_home_styles', '/wp-content/plugins/kh_meeting_uploader/styles/home.css');
+
+ add_menu_page(
+    'Meetings',
+    'Meetings',
+    'manage_options',
+    'kh_meeting_uploader/uploader/home.php',
+    '',
+    '',
+    6
+ );
+
+function kh_upload_submenu(){
+    add_submenu_page(
+        'kh_meeting_uploader/uploader/home.php',
+        'Meeting Upload Form',
+        'Upload Form',
+        'manage_options',
+        'kh_meeting_uploader_upload',
+        'kh_upload_submenu_callback'
+    );
+}
+
+add_action('admin_menu', 'kh_upload_submenu');
+
+function kh_upload_submenu_callback(){
+    include_once(plugin_dir_path(__FILE__) . '/Menu/Menu.php');
+}
+
+//////////////////
+
+
+
+function kh_edit_submenu(){
+    add_submenu_page(
+        'kh_meeting_uploader/uploader/home.php',
+        'Meeting Upload Form',
+        'Edit Uploads',
+        'manage_options',
+        'kh_meeting_uploader_edit',
+        'kh_edit_submenu_callback'
+    );
+}
+
+add_action('admin_menu', 'kh_edit_submenu');
+
+function kh_edit_submenu_callback(){
+    include_once(plugin_dir_path(__FILE__) . '/Menu/Edit.php');
 }

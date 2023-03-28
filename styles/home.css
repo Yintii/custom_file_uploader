@@ -1,0 +1,26 @@
+.kh-menu-wrap{
+    width: 90%;
+}
+
+.kh-menu-content{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.kh-bubble-content{
+    margin: 3rem auto 0 auto;
+}
+
+.kh-bubble-content a{
+    background-color: black;
+    box-sizing: border-box;
+    color:white;
+    text-decoration: none;
+    border-radius:10px;
+    padding: 0.5rem;
+}
+
+.kh-bubble-content a:hover {
+    color: black;
+    background-color: yellow;
+}
