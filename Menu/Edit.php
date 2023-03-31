@@ -46,7 +46,7 @@ if(!isset($_POST['submit'])){
           echo '<td><a href="'.$entry->file_path.'" target="_blank">File</a></td>';
           echo '<td><form action="" method="POST">';
           echo '<input type="number" name="id" value="'. $entry->id .'" hidden />';
-          echo '<input type="submit" name="delete" value="delete" onclick="deleteEntry()" />';
+          echo '<input type="submit" name="delete" value="delete" onclick="deleteEntry(event)" />';
           echo '</form></td>';
           echo '</tr>';
         }
