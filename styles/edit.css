@@ -4,11 +4,23 @@
 
 .kh-table-wrap table{
     width:80%;
-    min-height: 80vh;
     max-height: 80vh;
-    margin: 0 auto;
     overflow-y: scroll;
 }
 td{
     padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+tr:first-child{
+    background-color: black !important;
+    color:white !important;
+}
+
+tr:nth-child(even){
+    background-color: aqua;
+}
+
+tr:nth-child(odd) {
+    background-color: yellow;
 }

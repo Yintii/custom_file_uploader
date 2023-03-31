@@ -38,6 +38,8 @@ function kh_create_meetings_table(){
  wp_register_style('kh_uploader_upload_styles', '/wp-content/plugins/kh_meeting_uploader/styles/upload.css');
  wp_register_style('kh_uploader_edit_styles', '/wp-content/plugins/kh_meeting_uploader/styles/edit.css');
 
+ wp_register_script('kh_uploader_delete_script', '/wp-content/plugins/kh_meeting_uploader/js/delete.js');
+
  add_menu_page(
     'Meetings',
     'Meetings',
