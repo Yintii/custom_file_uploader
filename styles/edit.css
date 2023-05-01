@@ -2,9 +2,13 @@
     width:100%;
 }
 
+a{
+    margin:0 5px;
+}
+
 .kh-table-wrap table{
     width:80%;
-    max-height: 80vh;
+    margin: 0 auto;
     overflow-y: scroll;
 }
 td{
@@ -18,9 +22,9 @@ tr:first-child{
 }
 
 tr:nth-child(even){
-    background-color: aqua;
+    background-color: #ccc;
 }
 
 tr:nth-child(odd) {
-    background-color: yellow;
+    background-color: #eee;
 }
